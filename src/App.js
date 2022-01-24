@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import TitreH1 from "./components/Titres/TitreH1";
+import Bouton from "./components/Bouton/Bouton";
+import Livres from "./containers/Livres/Livres";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+class App extends Component {
+  state = {
+    ajoutLivre: false,
+  };
+  handleClicAjoutLivre = () => {
+    this.setState((oldState, props) => {
+      return {
+        ajoutLivre: !oldState.ajoutLivre,
+      };
+    });
+  };
+  render() {
+    return (
+      <div className="container">
+        <TitreH1>CRUD ValEuRT</TitreH1>
+        <Livres
+          ajoutLivre={this.state.ajoutLivre}
+          fermerAjoutLivre={() => this.setState({ ajoutLivre: false })}
+        />
+        {/* la fonction fermerAjoutLivre ferme le form après l'ajout d'un livre  */}
+        <Bouton
+          typeBtn="btn-success"
+          css="w-100"
+          clic={this.handleClicAjoutLivre}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+          {!this.state.ajoutLivre ? "Ajouter" : "Fermer l'ajout"}
+        </Bouton>
+      </div>
+    );
+  }
 }
 
 export default App;
